@@ -3,6 +3,11 @@ export interface Movie {
   title: string;
 }
 
+export interface Genre {
+  id: number;
+  name: string;
+}
+
 export interface TrendingMoviesResponse {
   results: Movie[];
 }
@@ -13,7 +18,11 @@ export interface SearchMoviesResponse {
 
 export interface MovieDetails {
   id: number;
-  title: string;
+    title: string;
+    overview: string;
+    genres: Genre[];
+    poster_path: string | null;
+    vote_average: number | null;
 }
 
 export interface MovieCredits {
@@ -44,3 +53,11 @@ export interface Review {
   author: string;
   content: string;
 }
+
+export interface LocationState {
+ from: {
+    search: string;
+    pathname: string;
+  };
+}
+
