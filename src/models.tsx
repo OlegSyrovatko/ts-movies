@@ -1,6 +1,9 @@
 export interface Movie {
   id: number;
-  title: string;
+    title: string;
+    backdrop_path: string;
+    release_date: Date;
+    vote_average: number;
 }
 
 export interface Genre {

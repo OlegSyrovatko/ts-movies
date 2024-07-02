@@ -1,5 +1,4 @@
 import React, { lazy } from "react";
-// import React, { lazy, FC } from "react";
 import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./SharedLayout";
 import Home from "../pages/Home";
