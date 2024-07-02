@@ -34,7 +34,8 @@ export interface MovieCredits {
 export interface CastMember {
   id: number;
   name: string;
-  character: string;
+    character: string;
+      profile_path: string | null;
 }
 
 export interface CrewMember {
@@ -61,3 +62,9 @@ export interface LocationState {
   };
 }
 
+export interface MovieCredit {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}

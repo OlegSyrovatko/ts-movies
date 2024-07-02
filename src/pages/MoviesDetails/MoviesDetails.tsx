@@ -15,13 +15,6 @@ import {
    Genre, MovieDetails
 } from "../../models";
 
-// interface LocationState {
-//   from: {
-//     search: string;
-//     pathname: string;
-//   };
-// }
-
 const MoviesDetails: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [overview, setOverview] = useState<string>("");
