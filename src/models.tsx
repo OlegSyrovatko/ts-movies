@@ -1,3 +1,20 @@
+export interface PublicRouteProps {
+  component: React.ComponentType<any>;
+  redirectedTo?: string;
+}
+export interface AppProps { }
+
+export interface RootState {
+  auth: {
+    isLoggedIn: boolean;
+  };
+}
+
+export interface PrivateRouteProps {
+  component: React.ComponentType<any>;
+  redirectedTo?: string;
+}
+
 export interface Movie {
   id: number;
     title: string;
