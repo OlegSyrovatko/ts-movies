@@ -4,8 +4,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Credentials, AuthResponse, User } from "./authTypes";
 import { RootState } from "../../store"; // Adjust the import path as necessary
 
-// axios.defaults.baseURL = "https://connections-api.herokuapp.com";
-axios.defaults.baseURL = "https://ts-nodejs-5beg.onrender.com";
+export const baseURL = "https://ts-nodejs-5beg.onrender.com";
+// export const baseURL = = "https://connections-api.herokuapp.com";
+// export const baseURL = = "http://localhost:3000";
+
+axios.defaults.baseURL = baseURL;
 
 const token = {
   set(token: string) {
@@ -104,7 +107,7 @@ export const fetchCurrentUser = createAsyncThunk<
 
   token.set(persistedToken);
   try {
-    const { data } = await axios.get<User>("/users/current");
+    const { data } = await axios.get<User>("/auth/current");
     return data;
   } catch (error: any) {
     // TODO: Добавить обработку ошибки error.message

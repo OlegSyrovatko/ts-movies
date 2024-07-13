@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-
+import styled from "@emotion/styled";
 
 export const Container = styled.div`
   display: flex;
@@ -9,8 +8,8 @@ export const Container = styled.div`
 export const Avatar = styled.img`
   margin-right: 4px;
   margin-left: 4px;
+  border-radius: 50%;
 `;
-
 
 export const Name = styled.span`
   font-weight: 700;

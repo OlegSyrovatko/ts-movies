@@ -1,12 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { authSelectors, authOperations } from '../../redux/auth';
-import { Container, Button, Avatar, Name } from './UserMenu.styled';
-import defaultAvatar from './default-avatar.jpg';
-import { RootState, AppDispatch } from '../../store'; 
+import { useDispatch, useSelector } from "react-redux";
+import { authSelectors, authOperations } from "../../redux/auth";
+import { Container, Button, Avatar, Name } from "./UserMenu.styled";
+import defaultAvatar from "./default-avatar.jpg";
+import { RootState, AppDispatch } from "../../store";
 
 export default function UserMenu() {
-  const name = useSelector((state: RootState) => authSelectors.getUsername(state));
-  const avatar = defaultAvatar;
+  const name = useSelector((state: RootState) =>
+    authSelectors.getUsername(state)
+  );
+  const avatar =
+    useSelector((state: RootState) => authSelectors.getUserAvatar(state)) ||
+    defaultAvatar;
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLogout = () => {
