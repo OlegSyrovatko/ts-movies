@@ -1,6 +1,7 @@
 export interface User {
   name: string | null;
   email: string | null;
+  avatarURL: string | null;
 }
 
 export interface AuthState {

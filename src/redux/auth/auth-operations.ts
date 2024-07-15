@@ -65,11 +65,46 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
   }
 );
 
+export const AvDelete = createAsyncThunk<void>(
+  "auth/deleteAvatar",
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.delete("/auth/avatar");
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const AvUpload = createAsyncThunk<{ avatarURL: string }, File>(
+  "auth/uploadAvatar",
+  async (file, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const { data } = await axios.patch<{ avatarURL: string }>(
+        "/auth/avatar",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 /*
  * POST @ /users/logout
  * headers: Authorization: Bearer token
  * После успешного логаута, удаляем токен из HTTP-заголовка
  */
+
 export const logOut = createAsyncThunk<void>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -119,6 +154,8 @@ const operations = {
   register,
   logIn,
   logOut,
+  AvDelete,
+  AvUpload,
   fetchCurrentUser,
 };
 export default operations;
