@@ -1,30 +1,30 @@
 {
   "files": {
     "main.css": "/ts-movies/static/css/main.c1cad30a.css",
-    "main.js": "/ts-movies/static/js/main.b26e0606.js",
+    "main.js": "/ts-movies/static/js/main.33dff404.js",
     "static/js/348.c198cca0.chunk.js": "/ts-movies/static/js/348.c198cca0.chunk.js",
     "static/js/521.2845039c.chunk.js": "/ts-movies/static/js/521.2845039c.chunk.js",
     "static/js/867.289749ce.chunk.js": "/ts-movies/static/js/867.289749ce.chunk.js",
     "static/js/567.2bf23afa.chunk.js": "/ts-movies/static/js/567.2bf23afa.chunk.js",
     "static/js/131.ae8625e2.chunk.js": "/ts-movies/static/js/131.ae8625e2.chunk.js",
     "static/js/152.b50f8baf.chunk.js": "/ts-movies/static/js/152.b50f8baf.chunk.js",
-    "static/js/849.f880331c.chunk.js": "/ts-movies/static/js/849.f880331c.chunk.js",
+    "static/js/849.08c75231.chunk.js": "/ts-movies/static/js/849.08c75231.chunk.js",
     "static/js/112.c9b465a0.chunk.js": "/ts-movies/static/js/112.c9b465a0.chunk.js",
     "static/media/default-avatar.jpg": "/ts-movies/static/media/default-avatar.b24dec6607b454ec9ec3.jpg",
     "index.html": "/ts-movies/index.html",
     "main.c1cad30a.css.map": "/ts-movies/static/css/main.c1cad30a.css.map",
-    "main.b26e0606.js.map": "/ts-movies/static/js/main.b26e0606.js.map",
+    "main.33dff404.js.map": "/ts-movies/static/js/main.33dff404.js.map",
     "348.c198cca0.chunk.js.map": "/ts-movies/static/js/348.c198cca0.chunk.js.map",
     "521.2845039c.chunk.js.map": "/ts-movies/static/js/521.2845039c.chunk.js.map",
     "867.289749ce.chunk.js.map": "/ts-movies/static/js/867.289749ce.chunk.js.map",
     "567.2bf23afa.chunk.js.map": "/ts-movies/static/js/567.2bf23afa.chunk.js.map",
     "131.ae8625e2.chunk.js.map": "/ts-movies/static/js/131.ae8625e2.chunk.js.map",
     "152.b50f8baf.chunk.js.map": "/ts-movies/static/js/152.b50f8baf.chunk.js.map",
-    "849.f880331c.chunk.js.map": "/ts-movies/static/js/849.f880331c.chunk.js.map",
+    "849.08c75231.chunk.js.map": "/ts-movies/static/js/849.08c75231.chunk.js.map",
     "112.c9b465a0.chunk.js.map": "/ts-movies/static/js/112.c9b465a0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c1cad30a.css",
-    "static/js/main.b26e0606.js"
+    "static/js/main.33dff404.js"
   ]
 }
