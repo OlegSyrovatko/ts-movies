@@ -1,11 +1,17 @@
-// src/redux/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import authOperations from "./auth-operations";
-import { AuthState, User } from "./authTypes";
+import authOperations, { refreshToken } from "./auth-operations";
+import { AuthState, AuthResponse } from "./authTypes";
 
 const initialState: AuthState = {
-  user: { name: null, email: null, avatarURL: null },
+  user: {
+    name: null,
+    email: null,
+    avatarURL: null,
+    subscription: null,
+    movieIds: null,
+  },
   token: null,
+  tokenRefresh: null,
   isLoggedIn: false,
   isFetchingCurrentUser: false,
 };
@@ -18,23 +24,44 @@ const authSlice = createSlice({
     builder
       .addCase(
         authOperations.register.fulfilled,
-        (state, action: PayloadAction<{ user: User; token: string }>) => {
-          state.user = action.payload.user;
-          state.token = action.payload.token;
+        (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.user = payload.user;
+          state.token = payload.token;
+          state.tokenRefresh = payload.tokenRefresh;
           state.isLoggedIn = true;
         }
       )
       .addCase(
         authOperations.logIn.fulfilled,
-        (state, action: PayloadAction<{ user: User; token: string }>) => {
-          state.user = action.payload.user;
-          state.token = action.payload.token;
+        (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.user = payload.user;
+          state.token = payload.token;
+          state.tokenRefresh = payload.tokenRefresh;
           state.isLoggedIn = true;
         }
       )
-      .addCase(authOperations.logOut.fulfilled, (state) => {
-        state.user = { name: null, email: null, avatarURL: null };
+      .addCase(
+        refreshToken.fulfilled,
+        (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.token = payload.token;
+          state.tokenRefresh = payload.tokenRefresh;
+        }
+      )
+      .addCase(refreshToken.rejected, (state) => {
         state.token = null;
+        state.tokenRefresh = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(authOperations.logOut.fulfilled, (state) => {
+        state.user = {
+          name: null,
+          email: null,
+          avatarURL: null,
+          subscription: null,
+          movieIds: null,
+        };
+        state.token = null;
+        state.tokenRefresh = null;
         state.isLoggedIn = false;
       })
       .addCase(authOperations.fetchCurrentUser.pending, (state) => {
@@ -42,8 +69,10 @@ const authSlice = createSlice({
       })
       .addCase(
         authOperations.fetchCurrentUser.fulfilled,
-        (state, action: PayloadAction<User>) => {
-          state.user = action.payload;
+        (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.user = payload.user;
+          state.token = payload.token;
+          state.tokenRefresh = payload.tokenRefresh;
           state.isLoggedIn = true;
           state.isFetchingCurrentUser = false;
         }
@@ -54,9 +83,7 @@ const authSlice = createSlice({
       .addCase(
         authOperations.AvUpload.fulfilled,
         (state, action: PayloadAction<{ avatarURL: string }>) => {
-          if (state.user) {
-            state.user.avatarURL = action.payload.avatarURL;
-          }
+          state.user.avatarURL = action.payload.avatarURL;
           state.isFetchingCurrentUser = false;
         }
       )
@@ -66,15 +93,10 @@ const authSlice = createSlice({
       .addCase(authOperations.AvUpload.rejected, (state) => {
         state.isFetchingCurrentUser = false;
       })
-      .addCase(
-        authOperations.AvDelete.fulfilled,
-        (state, action: PayloadAction<void>) => {
-          if (state.user) {
-            state.user.avatarURL = null;
-          }
-          state.isFetchingCurrentUser = false;
-        }
-      )
+      .addCase(authOperations.AvDelete.fulfilled, (state) => {
+        state.user.avatarURL = null;
+        state.isFetchingCurrentUser = false;
+      })
       .addCase(authOperations.AvDelete.pending, (state) => {
         state.isFetchingCurrentUser = true;
       })
@@ -83,4 +105,5 @@ const authSlice = createSlice({
       });
   },
 });
+
 export default authSlice.reducer;

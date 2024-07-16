@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container, Header, Link } from "./SharedLayout.styled";
 import { authSelectors } from "../../redux/auth";
-import  UserMenu  from "../UserMenu";
+import UserMenu from "../UserMenu";
 const SharedLayout = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 

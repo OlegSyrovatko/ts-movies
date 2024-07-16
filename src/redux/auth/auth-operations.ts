@@ -1,12 +1,10 @@
-// src/redux/auth-operations.ts
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Credentials, AuthResponse, User } from "./authTypes";
-import { RootState } from "../../store"; // Adjust the import path as necessary
+import { AuthResponse, Credentials } from "./authTypes";
+import { RootState } from "../../store";
 
+// export const baseURL = "http://localhost:3000";
 export const baseURL = "https://ts-nodejs-5beg.onrender.com";
-// export const baseURL = = "https://connections-api.herokuapp.com";
-// export const baseURL = = "http://localhost:3000";
 
 axios.defaults.baseURL = baseURL;
 
@@ -19,16 +17,9 @@ const token = {
   },
 };
 
-/*
- * POST @ /users/signup
- * body: { name, email, password }
- * После успешной регистрации добавляем токен в HTTP-заголовок
- */
 export const register = createAsyncThunk<AuthResponse, Credentials>(
   "auth/register",
   async (credentials, { rejectWithValue }) => {
-    console.log(credentials);
-
     try {
       const { data } = await axios.post<AuthResponse>(
         "auth/register",
@@ -37,17 +28,11 @@ export const register = createAsyncThunk<AuthResponse, Credentials>(
       token.set(data.token);
       return data;
     } catch (error: any) {
-      // TODO: Добавить обработку ошибки error.message
       return rejectWithValue(error.message);
     }
   }
 );
 
-/*
- * POST @ /users/login
- * body: { email, password }
- * После успешного логина добавляем токен в HTTP-заголовок
- */
 export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
@@ -59,11 +44,34 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
       token.set(data.token);
       return data;
     } catch (error: any) {
-      // TODO: Добавить обработку ошибки error.message
       return rejectWithValue(error.message);
     }
   }
 );
+export const refreshToken = createAsyncThunk<
+  AuthResponse,
+  void,
+  { state: RootState }
+>("auth/refreshToken", async (_, { getState, rejectWithValue }) => {
+  const { auth } = getState();
+  const { user, tokenRefresh } = auth;
+
+  if (!tokenRefresh) {
+    return rejectWithValue("No refresh token available");
+  }
+
+  try {
+    const { data } = await axios.post<AuthResponse>(`/auth/refresh`, {
+      email: user.email,
+      tokenRefresh,
+    });
+
+    token.set(data.token);
+    return data;
+  } catch (error: any) {
+    return rejectWithValue(error.message);
+  }
+});
 
 export const AvDelete = createAsyncThunk<void>(
   "auth/deleteAvatar",
@@ -99,11 +107,6 @@ export const AvUpload = createAsyncThunk<{ avatarURL: string }, File>(
     }
   }
 );
-/*
- * POST @ /users/logout
- * headers: Authorization: Bearer token
- * После успешного логаута, удаляем токен из HTTP-заголовка
- */
 
 export const logOut = createAsyncThunk<void>(
   "auth/logout",
@@ -112,23 +115,13 @@ export const logOut = createAsyncThunk<void>(
       await axios.post("/auth/logout");
       token.unset();
     } catch (error: any) {
-      // TODO: Добавить обработку ошибки error.message
       return rejectWithValue(error.message);
     }
   }
 );
 
-/*
- * GET @ /users/current
- * headers:
- *    Authorization: Bearer token
- *
- * 1. Забираем токен из стейта через getState()
- * 2. Если токена нет, выходим не выполняя никаких операций
- * 3. Если токен есть, добавляет его в HTTP-заголовок и выполянем операцию
- */
 export const fetchCurrentUser = createAsyncThunk<
-  User,
+  AuthResponse,
   void,
   { state: RootState }
 >("auth/refresh", async (_, thunkAPI) => {
@@ -136,16 +129,14 @@ export const fetchCurrentUser = createAsyncThunk<
   const persistedToken = state.auth.token;
 
   if (persistedToken === null) {
-    // Токена нет, уходим из fetchCurrentUser
     return thunkAPI.rejectWithValue("No token found");
   }
 
   token.set(persistedToken);
   try {
-    const { data } = await axios.get<User>("/auth/current");
+    const { data } = await axios.get<AuthResponse>("/auth/current");
     return data;
   } catch (error: any) {
-    // TODO: Добавить обработку ошибки error.message
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -157,5 +148,6 @@ const operations = {
   AvDelete,
   AvUpload,
   fetchCurrentUser,
+  refreshToken,
 };
 export default operations;
