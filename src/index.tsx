@@ -5,6 +5,7 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
+import "./redux/auth/interceptors";
 import "./index.css";
 
 const basename = process.env.NODE_ENV === "production" ? "/ts-movies" : "/";

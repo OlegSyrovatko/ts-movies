@@ -48,30 +48,25 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
     }
   }
 );
-export const refreshToken = createAsyncThunk<
-  AuthResponse,
-  void,
-  { state: RootState }
->("auth/refreshToken", async (_, { getState, rejectWithValue }) => {
-  const { auth } = getState();
-  const { user, tokenRefresh } = auth;
+export const refreshToken = createAsyncThunk(
+  "auth/refreshToken",
+  async (email: string | null, { getState, rejectWithValue }) => {
+    const state = getState() as RootState;
 
-  if (!tokenRefresh) {
-    return rejectWithValue("No refresh token available");
+    const { tokenRefresh } = state.auth;
+
+    try {
+      const response = await axios.post("/auth/refresh", {
+        email,
+        tokenRefresh,
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error("Error refreshing token: ", error);
+      return rejectWithValue(error.response.data);
+    }
   }
-
-  try {
-    const { data } = await axios.post<AuthResponse>(`/auth/refresh`, {
-      email: user.email,
-      tokenRefresh,
-    });
-
-    token.set(data.token);
-    return data;
-  } catch (error: any) {
-    return rejectWithValue(error.message);
-  }
-});
+);
 
 export const AvDelete = createAsyncThunk<void>(
   "auth/deleteAvatar",

@@ -3,6 +3,7 @@ import { baseURL } from "../auth/auth-operations";
 const getIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 
 const getUsername = (state: RootState) => state.auth.user?.name || null;
+const getUseremail = (state: RootState) => state.auth.user?.email || null;
 
 export const getUserAvatar = (state: RootState) => {
   const avatarURL = state.auth.user?.avatarURL || null;
@@ -17,6 +18,7 @@ const authSelectors = {
   getUsername,
   getIsFetchingCurrent,
   getUserAvatar,
+  getUseremail,
 };
 
 export default authSelectors;

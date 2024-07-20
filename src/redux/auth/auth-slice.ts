@@ -38,16 +38,16 @@ const authSlice = createSlice({
           state.token = payload.token;
           state.tokenRefresh = payload.tokenRefresh;
           state.isLoggedIn = true;
+          localStorage.setItem("userEmail", payload.user.email || "");
         }
       )
-      .addCase(
-        refreshToken.fulfilled,
-        (state, { payload }: PayloadAction<AuthResponse>) => {
-          state.token = payload.token;
-          state.tokenRefresh = payload.tokenRefresh;
-        }
-      )
+
+      .addCase(refreshToken.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        state.tokenRefresh = payload.tokenRefresh;
+      })
       .addCase(refreshToken.rejected, (state) => {
+        console.log("Refresh token rejected");
         state.token = null;
         state.tokenRefresh = null;
         state.isLoggedIn = false;
@@ -63,6 +63,7 @@ const authSlice = createSlice({
         state.token = null;
         state.tokenRefresh = null;
         state.isLoggedIn = false;
+        localStorage.removeItem("userEmail");
       })
       .addCase(authOperations.fetchCurrentUser.pending, (state) => {
         state.isFetchingCurrentUser = true;
