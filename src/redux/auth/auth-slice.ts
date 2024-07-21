@@ -25,10 +25,10 @@ const authSlice = createSlice({
       .addCase(
         authOperations.register.fulfilled,
         (state, { payload }: PayloadAction<AuthResponse>) => {
-          state.user = payload.user;
-          state.token = payload.token;
-          state.tokenRefresh = payload.tokenRefresh;
-          state.isLoggedIn = true;
+          // state.user = payload.user;
+          // state.token = payload.token;
+          // state.tokenRefresh = payload.tokenRefresh;
+          // state.isLoggedIn = true;
         }
       )
       .addCase(
@@ -41,13 +41,14 @@ const authSlice = createSlice({
           localStorage.setItem("userEmail", payload.user.email || "");
         }
       )
-
+      .addCase(authOperations.logIn.rejected, (state, { payload }) => {
+        state.isFetchingCurrentUser = false;
+      })
       .addCase(refreshToken.fulfilled, (state, { payload }) => {
         state.token = payload.token;
         state.tokenRefresh = payload.tokenRefresh;
       })
       .addCase(refreshToken.rejected, (state) => {
-        console.log("Refresh token rejected");
         state.token = null;
         state.tokenRefresh = null;
         state.isLoggedIn = false;

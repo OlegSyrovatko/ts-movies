@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthResponse, Credentials } from "./authTypes";
 import { RootState } from "../../store";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 // export const baseURL = "http://localhost:3000";
 export const baseURL = "https://ts-nodejs-5beg.onrender.com";
@@ -26,8 +27,10 @@ export const register = createAsyncThunk<AuthResponse, Credentials>(
         credentials
       );
       token.set(data.token);
+      Notify.success("Check your e-mail to complete registration");
       return data;
     } catch (error: any) {
+      Notify.failure(error.response.data.message);
       return rejectWithValue(error.message);
     }
   }
@@ -44,6 +47,7 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
       token.set(data.token);
       return data;
     } catch (error: any) {
+      Notify.failure(error.response.data.message);
       return rejectWithValue(error.message);
     }
   }
