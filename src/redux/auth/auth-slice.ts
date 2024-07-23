@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import authOperations, { refreshToken } from "./auth-operations";
-import { AuthState, AuthResponse } from "./authTypes";
+import { AuthState, AuthResponse, ForgotResponse } from "./authTypes";
 
 const initialState: AuthState = {
   user: {
@@ -25,12 +25,19 @@ const authSlice = createSlice({
       .addCase(
         authOperations.register.fulfilled,
         (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.isFetchingCurrentUser = false;
           // state.user = payload.user;
           // state.token = payload.token;
           // state.tokenRefresh = payload.tokenRefresh;
           // state.isLoggedIn = true;
         }
       )
+      .addCase(authOperations.register.pending, (state) => {
+        state.isFetchingCurrentUser = true;
+      })
+      .addCase(authOperations.register.rejected, (state, { payload }) => {
+        state.isFetchingCurrentUser = false;
+      })
       .addCase(
         authOperations.logIn.fulfilled,
         (state, { payload }: PayloadAction<AuthResponse>) => {
@@ -39,10 +46,26 @@ const authSlice = createSlice({
           state.tokenRefresh = payload.tokenRefresh;
           state.isLoggedIn = true;
           localStorage.setItem("userEmail", payload.user.email || "");
+          state.isFetchingCurrentUser = false;
         }
       )
       .addCase(authOperations.logIn.rejected, (state, { payload }) => {
         state.isFetchingCurrentUser = false;
+      })
+      .addCase(authOperations.logIn.pending, (state) => {
+        state.isFetchingCurrentUser = true;
+      })
+      .addCase(
+        authOperations.ForgotPWD.fulfilled,
+        (state, { payload }: PayloadAction<ForgotResponse>) => {
+          state.isFetchingCurrentUser = false;
+        }
+      )
+      .addCase(authOperations.ForgotPWD.rejected, (state, { payload }) => {
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(authOperations.ForgotPWD.pending, (state) => {
+        state.isFetchingCurrentUser = true;
       })
       .addCase(refreshToken.fulfilled, (state, { payload }) => {
         state.token = payload.token;
@@ -65,6 +88,13 @@ const authSlice = createSlice({
         state.tokenRefresh = null;
         state.isLoggedIn = false;
         localStorage.removeItem("userEmail");
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(authOperations.logOut.rejected, (state, { payload }) => {
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(authOperations.logOut.pending, (state) => {
+        state.isFetchingCurrentUser = true;
       })
       .addCase(authOperations.fetchCurrentUser.pending, (state) => {
         state.isFetchingCurrentUser = true;

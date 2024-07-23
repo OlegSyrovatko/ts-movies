@@ -4,13 +4,8 @@ import { authOperations } from "../../redux/auth";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { AppDispatch } from "../../store";
-import { blue } from "@mui/material/colors";
 
-const styles: {
-  form: CSSProperties;
-  label: CSSProperties;
-  link: CSSProperties;
-} = {
+const styles: { form: CSSProperties; label: CSSProperties } = {
   form: {
     width: 320,
   },
@@ -19,20 +14,10 @@ const styles: {
     flexDirection: "column",
     marginBottom: 15,
   },
-  link: {
-    color: "#0d47a1",
-    textDecoration: "none",
-    display: "block",
-    marginTop: -30,
-    textAlign: "center",
-    marginLeft: 20,
-  },
 };
-
-export default function LoginView() {
+export default function ForgotPwd() {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -40,24 +25,24 @@ export default function LoginView() {
       case "email":
         setEmail(value);
         break;
-      case "password":
-        setPassword(value);
-        break;
-      default:
-        break;
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     dispatch(authOperations.ForgotPWD({ email }));
+  //     setEmail("");
+  //     };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(authOperations.logIn({ email, password }));
+    dispatch(authOperations.ForgotPWD({ email }));
     setEmail("");
-    setPassword("");
   };
 
   return (
     <div>
-      <h1>Login Page</h1>
+      <h1>Forgot Password Page</h1>
 
       <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
         <label style={styles.label}>
@@ -70,23 +55,10 @@ export default function LoginView() {
             onChange={handleChange}
           />
         </label>
-        <label style={styles.label}>
-          <TextField
-            required
-            type="password"
-            label="Password"
-            variant="outlined"
-            name="password"
-            value={password}
-            onChange={handleChange}
-          />
-        </label>
+
         <Button variant="contained" type="submit">
-          Log-in
-        </Button>{" "}
-        <a href="/forgotpwd" style={styles.link}>
-          Forgot password?
-        </a>
+          Send
+        </Button>
       </form>
     </div>
   );

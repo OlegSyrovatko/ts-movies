@@ -20,8 +20,16 @@ export interface Credentials {
   password: string;
 }
 
+export interface ForgotCredentials {
+  email?: string;
+  password?: string;
+}
+
 export interface AuthResponse {
   user: User;
   token: string;
   tokenRefresh: string | null;
+}
+export interface ForgotResponse {
+  message: string;
 }

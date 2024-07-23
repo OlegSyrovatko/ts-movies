@@ -1,6 +1,11 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthResponse, Credentials } from "./authTypes";
+import {
+  AuthResponse,
+  Credentials,
+  ForgotCredentials,
+  ForgotResponse,
+} from "./authTypes";
 import { RootState } from "../../store";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
@@ -52,6 +57,24 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
     }
   }
 );
+
+export const ForgotPWD = createAsyncThunk<
+  ForgotResponse,
+  Omit<ForgotCredentials, "password">
+>("auth/forgot-password", async (credentials, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post<ForgotResponse>(
+      "/auth/forgot-password",
+      credentials
+    );
+    Notify.success(data.message);
+    return data;
+  } catch (error: any) {
+    Notify.failure(error.response.data.message);
+    return rejectWithValue(error.message);
+  }
+});
+
 export const refreshToken = createAsyncThunk(
   "auth/refreshToken",
   async (email: string | null, { getState, rejectWithValue }) => {
@@ -142,6 +165,7 @@ export const fetchCurrentUser = createAsyncThunk<
 const operations = {
   register,
   logIn,
+  ForgotPWD,
   logOut,
   AvDelete,
   AvUpload,

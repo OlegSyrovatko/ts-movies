@@ -17,6 +17,7 @@ const Cast = lazy(() => import("./Cast"));
 const Reviews = lazy(() => import("./Reviews"));
 const RegisterView = lazy(() => import("../pages/Register"));
 const LoginView = lazy(() => import("../pages/Login"));
+const ForgotPwd = lazy(() => import("../pages/ForgotPwd"));
 
 const App: React.FC<AppProps> = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,10 @@ const App: React.FC<AppProps> = () => {
           <Route
             path="/register"
             element={<PublicRoute component={RegisterView} redirectedTo="/" />}
+          />
+          <Route
+            path="/forgotpwd"
+            element={<PublicRoute component={ForgotPwd} redirectedTo="/" />}
           />
           {/* <Route
                 path="/contacts"
