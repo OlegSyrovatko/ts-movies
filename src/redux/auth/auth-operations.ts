@@ -4,8 +4,8 @@ import { AuthResponse, Credentials } from "./authTypes";
 import { RootState } from "../../store";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-// export const baseURL = "http://localhost:3000";
-export const baseURL = "https://ts-nodejs-5beg.onrender.com";
+export const baseURL = "http://localhost:3000";
+// export const baseURL = "https://ts-nodejs-5beg.onrender.com";
 
 axios.defaults.baseURL = baseURL;
 
@@ -66,7 +66,6 @@ export const refreshToken = createAsyncThunk(
       });
       return response.data;
     } catch (error: any) {
-      console.error("Error refreshing token: ", error);
       return rejectWithValue(error.response.data);
     }
   }

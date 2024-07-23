@@ -23,6 +23,16 @@ export default function UserMenu() {
     (state: RootState) => authSelectors.getUserAvatar(state) || defaultAvatar
   );
 
+  const formatAvatarUrl = (url: string) => {
+    if (url.includes("gravatar.com")) {
+      const parts = url.split("gravatar.com");
+      return `https://gravatar.com${parts[1]}`;
+    }
+    return url;
+  };
+
+  const formattedAvatar = formatAvatarUrl(avatar);
+
   const serverAvatar = useSelector((state: RootState) =>
     authSelectors.getUserAvatar(state)
   );
@@ -58,7 +68,7 @@ export default function UserMenu() {
   return (
     <Container>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Avatar src={avatar} alt="" width="32" isBlurred={isHovered} />
+        <Avatar src={formattedAvatar} alt="" width="32" isBlurred={isHovered} />
         <AvSection isVisible={isHovered}>
           <FileInputLabel htmlFor="avatarInput">Choose</FileInputLabel>
           <HiddenFileInput
