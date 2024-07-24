@@ -4,7 +4,6 @@ import { authOperations } from "../../redux/auth";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { AppDispatch } from "../../store";
-import { blue } from "@mui/material/colors";
 
 const styles: {
   form: CSSProperties;
