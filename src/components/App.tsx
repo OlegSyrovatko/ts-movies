@@ -18,6 +18,7 @@ const Reviews = lazy(() => import("./Reviews"));
 const RegisterView = lazy(() => import("../pages/Register"));
 const LoginView = lazy(() => import("../pages/Login"));
 const ForgotPwd = lazy(() => import("../pages/ForgotPwd"));
+const ResetPwd = lazy(() => import("../pages/ResetPwd"));
 
 const App: React.FC<AppProps> = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,10 @@ const App: React.FC<AppProps> = () => {
           <Route
             path="/forgotpwd"
             element={<PublicRoute component={ForgotPwd} redirectedTo="/" />}
+          />
+          <Route
+            path="/resetpwd/:token"
+            element={<PublicRoute component={ResetPwd} redirectedTo="/" />}
           />
           {/* <Route
                 path="/contacts"

@@ -4,6 +4,11 @@ import { authOperations } from "../../redux/auth";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { AppDispatch } from "../../store";
+import { useParams, useNavigate } from "react-router-dom";
+
+type Params = {
+  token: string;
+};
 
 const styles: { form: CSSProperties; label: CSSProperties } = {
   form: {
@@ -15,37 +20,51 @@ const styles: { form: CSSProperties; label: CSSProperties } = {
     marginBottom: 15,
   },
 };
-export default function ForgotPwd() {
+
+export default function ResetPwd() {
+  const { token } = useParams<Params>();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  if (!token) {
+    navigate("/error");
+    return null;
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    switch (name) {
-      case "email":
-        setEmail(value);
-        break;
+    if (name === "password") {
+      setPassword(value);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(authOperations.ForgotPWD({ email }));
-    setEmail("");
+    if (token) {
+      const result = await dispatch(
+        authOperations.ResetPWD({ password, token })
+      );
+      if (authOperations.ResetPWD.fulfilled.match(result)) {
+        navigate("/login");
+      }
+      setPassword("");
+    }
   };
 
   return (
     <div>
-      <h1>Forgot Password Page</h1>
+      <h1>Reset Password Page</h1>
 
       <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
         <label style={styles.label}>
           <TextField
             required
-            label="E-mail"
+            label="Password"
             variant="outlined"
-            name="email"
-            value={email}
+            name="password"
+            type="password"
+            value={password}
             onChange={handleChange}
           />
         </label>

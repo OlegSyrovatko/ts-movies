@@ -4,6 +4,7 @@ import {
   AuthResponse,
   Credentials,
   ForgotCredentials,
+  ResetCredentials,
   ForgotResponse,
 } from "./authTypes";
 import { RootState } from "../../store";
@@ -58,22 +59,39 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
   }
 );
 
-export const ForgotPWD = createAsyncThunk<
-  ForgotResponse,
-  Omit<ForgotCredentials, "password">
->("auth/forgot-password", async (credentials, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post<ForgotResponse>(
-      "/auth/forgot-password",
-      credentials
-    );
-    Notify.success(data.message);
-    return data;
-  } catch (error: any) {
-    Notify.failure(error.response.data.message);
-    return rejectWithValue(error.message);
+export const ForgotPWD = createAsyncThunk<ForgotResponse, ForgotCredentials>(
+  "auth/forgot-password",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post<ForgotResponse>(
+        "/auth/forgot-password",
+        credentials
+      );
+      Notify.success(data.message);
+      return data;
+    } catch (error: any) {
+      Notify.failure(error.response.data.message);
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
+
+export const ResetPWD = createAsyncThunk<ForgotResponse, ResetCredentials>(
+  "auth/reset-password",
+  async ({ token, password }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post<ForgotResponse>(
+        `/auth/reset-password/${token}`,
+        { password }
+      );
+      Notify.success(data.message);
+      return data;
+    } catch (error: any) {
+      Notify.failure(error.response.data.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const refreshToken = createAsyncThunk(
   "auth/refreshToken",
@@ -166,6 +184,7 @@ const operations = {
   register,
   logIn,
   ForgotPWD,
+  ResetPWD,
   logOut,
   AvDelete,
   AvUpload,

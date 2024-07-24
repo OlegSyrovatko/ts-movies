@@ -21,8 +21,12 @@ export interface Credentials {
 }
 
 export interface ForgotCredentials {
-  email?: string;
-  password?: string;
+  email: string;
+}
+
+export interface ResetCredentials {
+  password: string;
+  token: string;
 }
 
 export interface AuthResponse {

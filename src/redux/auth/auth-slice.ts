@@ -67,6 +67,18 @@ const authSlice = createSlice({
       .addCase(authOperations.ForgotPWD.pending, (state) => {
         state.isFetchingCurrentUser = true;
       })
+      .addCase(
+        authOperations.ResetPWD.fulfilled,
+        (state, { payload }: PayloadAction<ForgotResponse>) => {
+          state.isFetchingCurrentUser = false;
+        }
+      )
+      .addCase(authOperations.ResetPWD.rejected, (state, { payload }) => {
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(authOperations.ResetPWD.pending, (state) => {
+        state.isFetchingCurrentUser = true;
+      })
       .addCase(refreshToken.fulfilled, (state, { payload }) => {
         state.token = payload.token;
         state.tokenRefresh = payload.tokenRefresh;
