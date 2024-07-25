@@ -8,10 +8,17 @@
   </head>
   <body>
     <script>
+      // Отримати запитаний шлях
       var path = window.location.pathname;
 
-      // Перенаправити на /ts-movies з запитуваним шляхом
-      window.location.replace(path);
+      // Перевірити, чи шлях вже містить /ts-movies
+      if (!path.startsWith("/ts-movies")) {
+        // Додати /ts-movies перед шляхом, якщо він не містить /ts-movies
+        window.location.replace("/ts-movies" + path);
+      } else {
+        // Якщо вже містить /ts-movies, перенаправити на /ts-movies/index.html
+        window.location.replace("/ts-movies/");
+      }
     </script>
   </body>
 </html>
