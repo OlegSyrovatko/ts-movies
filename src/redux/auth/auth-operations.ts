@@ -10,7 +10,7 @@ import {
 import { RootState } from "../../store";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-// export const baseURL = "http://localhost:3000";
+//  //export const baseURL = "http://localhost:3000";
 export const baseURL = "https://ts-nodejs-5beg.onrender.com";
 
 axios.defaults.baseURL = baseURL;

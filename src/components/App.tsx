@@ -44,27 +44,27 @@ const App: React.FC<AppProps> = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route
-            path="/login"
+            path="login"
             element={<PublicRoute component={LoginView} redirectedTo="/" />}
           />
           <Route
-            path="/register"
+            path="register"
             element={<PublicRoute component={RegisterView} redirectedTo="/" />}
           />
           <Route
-            path="/forgotpwd"
+            path="forgotpwd"
             element={<PublicRoute component={ForgotPwd} redirectedTo="/" />}
           />
           <Route
-            path="/resetpwd/:token"
+            path="resetpwd/:token"
             element={<PublicRoute component={ResetPwd} redirectedTo="/" />}
           />
           {/* <Route
                 path="/contacts"
                 element={<PrivateRoute component={ContactsView} redirectedTo="/login" />}
               /> */}
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:id" element={<MoviesDetails />}>
+          <Route path="movies" element={<Movies />} />
+          <Route path="movies/:id" element={<MoviesDetails />}>
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
