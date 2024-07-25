@@ -83,8 +83,8 @@ export default function LoginView() {
         <Button variant="contained" type="submit">
           Log-in
         </Button>{" "}
-        <a href="/ts-movies/forgotpwd" style={styles.link}>
-          Forgot password?
+        <a href="/forgotpwd" style={styles.link}>
+          Forgot password??
         </a>
       </form>
     </div>
