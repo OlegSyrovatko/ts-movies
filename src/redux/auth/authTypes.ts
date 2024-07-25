@@ -20,6 +20,10 @@ export interface Credentials {
   password: string;
 }
 
+export interface VerifyEMLCredentials {
+  token: string;
+}
+
 export interface ForgotCredentials {
   email: string;
 }

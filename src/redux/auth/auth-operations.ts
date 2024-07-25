@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   AuthResponse,
   Credentials,
+  VerifyEMLCredentials,
   ForgotCredentials,
   ResetCredentials,
   ForgotResponse,
@@ -51,6 +52,21 @@ export const logIn = createAsyncThunk<AuthResponse, Omit<Credentials, "name">>(
         credentials
       );
       token.set(data.token);
+      return data;
+    } catch (error: any) {
+      Notify.failure(error.response.data.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const VerifyEML = createAsyncThunk<ForgotResponse, VerifyEMLCredentials>(
+  "auth/verify",
+  async ({ token }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get<ForgotResponse>(`/auth/verify/${token}`);
+      console.log(data);
+      Notify.success(data.message);
       return data;
     } catch (error: any) {
       Notify.failure(error.response.data.message);
@@ -183,6 +199,7 @@ export const fetchCurrentUser = createAsyncThunk<
 const operations = {
   register,
   logIn,
+  VerifyEML,
   ForgotPWD,
   ResetPWD,
   logOut,

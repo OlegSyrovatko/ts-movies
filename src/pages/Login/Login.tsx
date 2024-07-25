@@ -4,6 +4,7 @@ import { authOperations } from "../../redux/auth";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { AppDispatch } from "../../store";
+import { Link } from "./Login.styled";
 
 const styles: {
   form: CSSProperties;
@@ -82,10 +83,9 @@ export default function LoginView() {
         </label>
         <Button variant="contained" type="submit">
           Log-in
-        </Button>{" "}
-        <a href="/forgotpwd" style={styles.link}>
-          Forgot password??
-        </a>
+        </Button>
+        <Link to="/forgotpwd">Forgot password?</Link>
+        <br />
       </form>
     </div>
   );

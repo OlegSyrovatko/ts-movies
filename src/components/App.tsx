@@ -19,6 +19,7 @@ const RegisterView = lazy(() => import("../pages/Register"));
 const LoginView = lazy(() => import("../pages/Login"));
 const ForgotPwd = lazy(() => import("../pages/ForgotPwd"));
 const ResetPwd = lazy(() => import("../pages/ResetPwd"));
+const VerifyEml = lazy(() => import("../pages/VerifyEml"));
 
 const App: React.FC<AppProps> = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,10 @@ const App: React.FC<AppProps> = () => {
           <Route
             path="register"
             element={<PublicRoute component={RegisterView} redirectedTo="/" />}
+          />
+          <Route
+            path="verifyeml/:token"
+            element={<PublicRoute component={VerifyEml} redirectedTo="/" />}
           />
           <Route
             path="forgotpwd"
