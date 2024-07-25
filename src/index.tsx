@@ -8,8 +8,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./redux/auth/interceptors";
 import "./index.css";
 
-const basename = process.env.NODE_ENV === "production" ? "/ts-movies" : "/";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -17,7 +15,7 @@ root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
-        <BrowserRouter basename={basename}>
+        <BrowserRouter basename="/ts-movies">
           <App />
         </BrowserRouter>
       </React.StrictMode>
