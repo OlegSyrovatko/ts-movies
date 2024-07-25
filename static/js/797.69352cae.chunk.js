@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_typescript_test_project=self.webpackChunkreact_typescript_test_project||[]).push([[797],{2797:(e,t,c)=>{c.r(t),c.d(t,{default:()=>f});var r=c(5043),i=c(3003),s=c(1500),a=c(3216),n=c(579);function f(){const{token:e}=(0,a.g)(),t=(0,a.Zp)(),c=(0,i.wA)();return(0,r.useEffect)((()=>{(async()=>{if(e)try{const r=await c(s.Th.VerifyEML({token:e}));s.Th.VerifyEML.fulfilled.match(r)&&t("/login")}catch(r){}})()}),[e,c,t]),(0,n.jsx)("div",{children:(0,n.jsx)("h1",{children:"Verify Email Page"})})}}}]);
+//# sourceMappingURL=797.69352cae.chunk.js.map
