@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./SharedLayout";
 import Home from "../pages/Home";
 import { AppProps } from "../models";
-// import { PrivateRoute } from '../PrivateRoute';
+// // import { PrivateRoute } from '../PrivateRoute';
 import { PublicRoute } from "../PublicRoute";
 import { authSelectors } from "../redux/auth";
 import { authOperations } from "../redux/auth";
