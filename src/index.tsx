@@ -15,7 +15,8 @@ root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
-        <BrowserRouter basename="/ts-movies">
+        <BrowserRouter basename="/">
+          {/* <BrowserRouter basename="/ts-movies"> */}
           <App />
         </BrowserRouter>
       </React.StrictMode>
