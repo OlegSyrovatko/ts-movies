@@ -2,7 +2,7 @@
   "name": "react-typescript-test-project",
   "version": "0.1.0",
   "private": true,
-"homepage": "https://graceful-boba-c9e6fd.netlify.app",
+
   "dependencies": {
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.16.1",
