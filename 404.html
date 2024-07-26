@@ -18,14 +18,8 @@
       if (!path.startsWith("/ts-movies")) {
         // Додати /ts-movies перед шляхом, якщо він не містить /ts-movies
         window.location.replace("/ts-movies" + path);
-      } else {
-        // Перенаправити на index.html з правильним шляхом
-        window.location.replace(
-          "/ts-movies/index.html" +
-            window.location.search +
-            window.location.hash
-        );
       }
+      // Якщо шлях правильний, нічого не робити
     </script>
   </body>
 </html>
