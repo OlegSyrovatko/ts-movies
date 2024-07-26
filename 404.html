@@ -20,8 +20,8 @@
         window.location.replace("/ts-movies" + path);
       } else {
         // Зупинити подальші перенаправлення, якщо шлях правильний
-        // Використовуємо history.replaceState, щоб уникнути зміни URL
-        history.replaceState(null, "", path);
+        // Завантажити головну сторінку SPA з правильною маршрутизацією
+        window.location.replace("/ts-movies");
       }
     </script>
   </body>
