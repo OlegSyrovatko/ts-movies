@@ -8,22 +8,20 @@
   </head>
   <body>
     <script>
-      // Отримати запитаний шлях
-      var path = window.location.pathname + window.location.search;
+      // Отримати запитаний шлях та параметри запиту
+      var path =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
 
       // Перевірити, чи шлях вже містить /ts-movies
       if (!path.startsWith("/ts-movies")) {
         // Додати /ts-movies перед шляхом, якщо він не містить /ts-movies
         window.location.replace("/ts-movies" + path);
       } else {
-        // Якщо шлях вже містить /ts-movies, перевірити наявність запитів
-        // Перенаправити на головну сторінку /ts-movies
-        if (window.location.pathname === "/ts-movies/") {
-          window.location.replace("/ts-movies/");
-        } else {
-          // Для інших випадків додати базовий шлях і зберігати параметри
-          window.location.replace("/ts-movies" + path);
-        }
+        // Зупинити подальші перенаправлення, якщо шлях правильний
+        // Використовуємо history.replaceState, щоб уникнути зміни URL
+        history.replaceState(null, "", path);
       }
     </script>
   </body>
