@@ -9,15 +9,21 @@
   <body>
     <script>
       // Отримати запитаний шлях та параметри запиту
-      var path = window.location.pathname + window.location.search;
+      var path =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
 
       // Перевірити, чи шлях вже містить /ts-movies
       if (!path.startsWith("/ts-movies")) {
         // Додати /ts-movies перед шляхом, якщо він не містить /ts-movies
         window.location.replace("/ts-movies" + path);
       } else {
-        // Якщо вже містить /ts-movies, залишити на поточному шляху
-        window.location.replace(path);
+        // Якщо вже містить /ts-movies, перевірити, чи це не поточна сторінка
+        if (window.location.pathname !== "/ts-movies/") {
+          // Зупинити подальші перенаправлення
+          history.replaceState(null, "", "/ts-movies" + path);
+        }
       }
     </script>
   </body>
