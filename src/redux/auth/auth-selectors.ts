@@ -4,6 +4,7 @@ const getIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 
 const getUsername = (state: RootState) => state.auth.user?.name || null;
 const getUseremail = (state: RootState) => state.auth.user?.email || null;
+const getfavoriteMovies = (state: RootState) => state.auth.user?.movieIds || [];
 
 export const getUserAvatar = (state: RootState) => {
   const avatarURL = state.auth.user?.avatarURL || null;
@@ -19,6 +20,7 @@ const authSelectors = {
   getIsFetchingCurrent,
   getUserAvatar,
   getUseremail,
+  getfavoriteMovies,
 };
 
 export default authSelectors;

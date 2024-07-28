@@ -65,7 +65,6 @@ export const VerifyEML = createAsyncThunk<ForgotResponse, VerifyEMLCredentials>(
   async ({ token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.get<ForgotResponse>(`/auth/verify/${token}`);
-      console.log(data);
       Notify.success(data.message);
       return data;
     } catch (error: any) {
@@ -128,17 +127,6 @@ export const refreshToken = createAsyncThunk(
   }
 );
 
-export const AvDelete = createAsyncThunk<void>(
-  "auth/deleteAvatar",
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.delete("/auth/avatar");
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 export const AvUpload = createAsyncThunk<{ avatarURL: string }, File>(
   "auth/uploadAvatar",
   async (file, { rejectWithValue }) => {
@@ -158,6 +146,45 @@ export const AvUpload = createAsyncThunk<{ avatarURL: string }, File>(
 
       return data;
     } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const AvDelete = createAsyncThunk<void>(
+  "auth/deleteAvatar",
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.delete("/auth/avatar");
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addMovieToUser = createAsyncThunk<void, string>(
+  "auth/add-movie",
+  async (movieId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch("/auth/add-movie", { movieId });
+      Notify.success("movie added to your bookmarks");
+      return data;
+    } catch (error: any) {
+      Notify.failure(error.response.data.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const removeMovieToUser = createAsyncThunk<void, string>(
+  "auth/remove-movie",
+  async (movieId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch("/auth/remove-movie", { movieId });
+      Notify.success("movie deleted from your bookmarks");
+      return data;
+    } catch (error: any) {
+      Notify.failure(error.response.data.message);
       return rejectWithValue(error.message);
     }
   }
@@ -207,5 +234,7 @@ const operations = {
   AvUpload,
   fetchCurrentUser,
   refreshToken,
+  addMovieToUser,
+  removeMovieToUser,
 };
 export default operations;

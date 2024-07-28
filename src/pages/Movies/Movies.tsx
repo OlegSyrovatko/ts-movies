@@ -1,16 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { SearchHeader, Form, Button, Input } from "./Movies.styled";
 import { getSearchMovies } from "../../services/content-api";
 import { Loading } from "notiflix/build/notiflix-loading-aio";
-import {
-  Ul,
-  Li,
-  MovieBackdrop,
-  MovieInfo,
-  VoteAverage,
-  ReleaseDate,
-} from "../Home/Home.styled";
+import { Ul, Li } from "../Home/Home.styled";
+import MovieItem from "../../components/MovieItem";
 
 import { Movie, SearchMoviesResponse } from "../../models";
 
@@ -28,8 +22,6 @@ const Movies: React.FC = () => {
       });
     }
   }, [queryS]);
-
-  const location = useLocation();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.currentTarget.value);
@@ -76,38 +68,18 @@ const Movies: React.FC = () => {
           {movies.map(
             ({ id, title, poster_path, release_date, vote_average }) => (
               <Li key={id}>
-                <Link to={`/movies/${id}`} state={{ from: location }}>
-                  <MovieBackdrop
-                    style={{
-                      backgroundImage: `url(${
-                        "https://image.tmdb.org/t/p/w780" + poster_path
-                      })`,
-                    }}
-                  >
-                    <VoteAverage voteAverage={vote_average}>
-                      {vote_average.toFixed(1)}
-                    </VoteAverage>
-                    <MovieInfo>{title}</MovieInfo>
-                    <ReleaseDate>
-                      {new Date(release_date).toLocaleDateString()}
-                    </ReleaseDate>
-                  </MovieBackdrop>
-                </Link>
+                <MovieItem
+                  id={id}
+                  title={title}
+                  poster_path={poster_path}
+                  release_date={release_date}
+                  vote_average={vote_average}
+                />
               </Li>
             )
           )}
         </Ul>
       )}
-      {/* <ul>
-        {movies.length > 1 &&
-          movies.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`} state={{ from: location }}>
-                {title}
-              </Link>
-            </li>
-          ))}
-      </ul> */}
     </>
   );
 };

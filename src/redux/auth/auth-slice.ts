@@ -8,7 +8,7 @@ const initialState: AuthState = {
     email: null,
     avatarURL: null,
     subscription: null,
-    movieIds: null,
+    movieIds: [],
   },
   token: null,
   tokenRefresh: null,
@@ -94,7 +94,7 @@ const authSlice = createSlice({
           email: null,
           avatarURL: null,
           subscription: null,
-          movieIds: null,
+          movieIds: [],
         };
         state.token = null;
         state.tokenRefresh = null;
@@ -145,6 +145,35 @@ const authSlice = createSlice({
         state.isFetchingCurrentUser = true;
       })
       .addCase(authOperations.AvDelete.rejected, (state) => {
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(
+        authOperations.addMovieToUser.fulfilled,
+        (state, { payload }: any) => {
+          console.log(payload.movieIds);
+
+          state.user.movieIds = payload.movieIds;
+          state.isFetchingCurrentUser = false;
+        }
+      )
+      .addCase(authOperations.addMovieToUser.pending, (state) => {
+        state.isFetchingCurrentUser = true;
+      })
+      .addCase(authOperations.addMovieToUser.rejected, (state) => {
+        state.isFetchingCurrentUser = false;
+      })
+      .addCase(
+        authOperations.removeMovieToUser.fulfilled,
+        (state, { payload }: any) => {
+          state.user.movieIds = payload.movieIds;
+          console.log(payload.movieIds);
+          state.isFetchingCurrentUser = false;
+        }
+      )
+      .addCase(authOperations.removeMovieToUser.pending, (state) => {
+        state.isFetchingCurrentUser = true;
+      })
+      .addCase(authOperations.removeMovieToUser.rejected, (state) => {
         state.isFetchingCurrentUser = false;
       });
   },
