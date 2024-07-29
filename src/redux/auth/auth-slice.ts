@@ -114,10 +114,9 @@ const authSlice = createSlice({
       .addCase(
         authOperations.fetchCurrentUser.fulfilled,
         (state, { payload }: PayloadAction<AuthResponse>) => {
+          state.isLoggedIn = true;
           state.user = payload.user;
           state.token = payload.token;
-          state.tokenRefresh = payload.tokenRefresh;
-          state.isLoggedIn = true;
           state.isFetchingCurrentUser = false;
         }
       )

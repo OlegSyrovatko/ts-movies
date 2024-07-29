@@ -5,7 +5,7 @@ import React from "react";
 import { PrivateRouteProps } from "./models";
 import { RootState } from "./store";
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   redirectedTo = "/",
 }) => {
@@ -20,3 +20,4 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   return shouldRedirect ? <Navigate to={redirectedTo} /> : <Component />;
 };
 
+export default PrivateRoute;

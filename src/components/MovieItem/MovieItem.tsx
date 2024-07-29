@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSelectors, authOperations } from "../../redux/auth";
 import { RootState, AppDispatch } from "../../store";
 
-// import { addMovie, removeMovie } from "../features/movies/movieSlice";
 import {
   MovieBackdrop,
   MovieInfo,
@@ -44,13 +43,6 @@ const MovieItem: React.FC<MovieItemProps> = ({
     setIsFavorite(favoriteMovies.includes(id.toString()));
   }, [favoriteMovies, id]);
 
-  // const toggleFavorite = (movieId: string) => {
-  //   if (favoriteMovies.includes(movieId)) {
-  //     dispatch(authOperations.removeMovieToUser(movieId));
-  //   } else {
-  //     dispatch(authOperations.addMovieToUser(movieId));
-  //   }
-  // };
   const toggleFavorite = (movieId: string) => {
     if (isFavorite) {
       dispatch(authOperations.removeMovieToUser(movieId));

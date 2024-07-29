@@ -13,6 +13,7 @@ const SharedLayout = () => {
         <nav>
           <Link to="/">Home</Link>
           <Link to="/movies">Movies</Link>
+          {isLoggedIn && <Link to="/favorites">Bookmarks</Link>}
         </nav>
         <nav>
           {isLoggedIn && <UserMenu />}

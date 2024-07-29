@@ -4,8 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./SharedLayout";
 import Home from "../pages/Home";
 import { AppProps } from "../models";
-// // import { PrivateRoute } from '../PrivateRoute';
-import { PublicRoute } from "../PublicRoute";
+import PrivateRoute from "../PrivateRoute";
+import PublicRoute from "../PublicRoute";
 import { authSelectors } from "../redux/auth";
 import { authOperations } from "../redux/auth";
 import { RootState } from "../store";
@@ -15,6 +15,8 @@ const Movies = lazy(() => import("../pages/Movies"));
 const MoviesDetails = lazy(() => import("../pages/MoviesDetails"));
 const Cast = lazy(() => import("./Cast"));
 const Reviews = lazy(() => import("./Reviews"));
+
+const FavoritessView = lazy(() => import("../pages/Favorites"));
 const RegisterView = lazy(() => import("../pages/Register"));
 const LoginView = lazy(() => import("../pages/Login"));
 const ForgotPwd = lazy(() => import("../pages/ForgotPwd"));
@@ -64,10 +66,12 @@ const App: React.FC<AppProps> = () => {
             path="/resetpwd/:token"
             element={<PublicRoute component={ResetPwd} redirectedTo="/" />}
           />
-          {/* <Route
-                path="/contacts"
-                element={<PrivateRoute component={ContactsView} redirectedTo="/login" />}
-              /> */}
+          <Route
+            path="/favorites"
+            element={
+              <PrivateRoute component={FavoritessView} redirectedTo="/login" />
+            }
+          />
           <Route path="/movies" element={<Movies />} />
           <Route path="/movies/:id" element={<MoviesDetails />}>
             <Route path="cast" element={<Cast />} />
